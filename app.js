@@ -1,26 +1,46 @@
 const movies = [
-    { title: "The Pipeline", rating: "8.9", year: 2026 },
-    { title: "Containerized", rating: "9.2", year: 2025 },
-    { title: "Return of the Node", rating: "7.8", year: 2024 },
-    { title: "Vulnerability Scanned", rating: "8.5", year: 2026 },
-    { title: "The Deployment", rating: "9.5", year: 2023 }
+    { title: "Inception", image: "https://via.placeholder.com/300x450/1a1a1a/f5c518?text=Inception" },
+    { title: "The Dark Knight", image: "https://via.placeholder.com/300x450/1a1a1a/f5c518?text=The+Dark+Knight" },
+    { title: "Interstellar", image: "https://via.placeholder.com/300x450/1a1a1a/f5c518?text=Interstellar" },
+    { title: "Avatar", image: "https://via.placeholder.com/300x450/1a1a1a/f5c518?text=Avatar" },
+    { title: "The Matrix", image: "https://via.placeholder.com/300x450/1a1a1a/f5c518?text=The+Matrix" },
+    { title: "Gladiator", image: "https://via.placeholder.com/300x450/1a1a1a/f5c518?text=Gladiator" },
+    { title: "Joker", image: "https://via.placeholder.com/300x450/1a1a1a/f5c518?text=Joker" },
+    { title: "Dune", image: "https://via.placeholder.com/300x450/1a1a1a/f5c518?text=Dune" }
 ];
 
-document.addEventListener("DOMContentLoaded", () => {
-    const movieGrid = document.getElementById("movie-grid");
+const movieGrid = document.getElementById('movie-grid');
+const searchBar = document.getElementById('search-bar');
+
+function displayMovies(movieList) {
+    // Clear the grid before rendering
+    movieGrid.innerHTML = '';
     
-    movies.forEach(movie => {
-        const card = document.createElement("div");
-        card.className = "movie-card";
+    movieList.forEach(movie => {
+        const card = document.createElement('div');
+        card.className = 'movie-card';
         
         card.innerHTML = `
-            <div class="movie-poster">Image Placehoder<br>${movie.title}</div>
+            <img src="${movie.image}" alt="${movie.title}" class="movie-image">
             <div class="movie-info">
-                <h3 class="movie-title">${movie.title} (${movie.year})</h3>
-                <div class="movie-rating">★ ${movie.rating}/10</div>
+                <h3 class="movie-title">${movie.title}</h3>
             </div>
         `;
         
         movieGrid.appendChild(card);
     });
+}
+
+// Render all movies when the page first loads
+displayMovies(movies);
+
+// Filter movies based on search input
+searchBar.addEventListener('input', (e) => {
+    const searchTerm = e.target.value.toLowerCase();
+    
+    const filteredMovies = movies.filter(movie => 
+        movie.title.toLowerCase().includes(searchTerm)
+    );
+    
+    displayMovies(filteredMovies);
 });
